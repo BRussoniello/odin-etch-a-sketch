@@ -2,9 +2,9 @@
 Grid size = # of boxes in container
 */
 
-//add text field/button, and just set grid size using text field/ button click event.
+//user needs to be PROMPTED when clicking button. use prompt()
 //text field will default to 16.
-const INITIAL_GRID_SIZE = 16;
+const INITIAL_GRID_SIZE = +(document.querySelector("#grid-size").textContent);
 let currentGridSize = INITIAL_GRID_SIZE;
 let squareContainer = document.querySelector(".square-container");
 let squareContainerSize = squareContainer.offsetWidth;
@@ -18,9 +18,11 @@ for (let i = 1; i <= INITIAL_GRID_SIZE; i++) {
     row.style.height = intToSizeStyleString(INITIAL_BOX_SIDE_SIZE);
     for (let j = 1; j<= INITIAL_GRID_SIZE; j++) {
         let rowSquare = document.createElement("div")
+        rowSquare.setAttribute("class","row-square");
         rowSquare.style.height = intToSizeStyleString(INITIAL_BOX_SIDE_SIZE);
         rowSquare.style.width = intToSizeStyleString(INITIAL_BOX_SIDE_SIZE);
         rowSquare.style.border = "1px solid black";
+        rowSquare.style.boxSizing="border-box";
         //add mouse hover event listener
         row.appendChild(rowSquare);
         
