@@ -8,12 +8,10 @@ function makeGrid(gridSize,gridContainer,boxSize) {
         row.style.display="flex";
         row.style.width = intToSizeStyleString(gridSize*boxSize);
         row.style.height = intToSizeStyleString(boxSize);
-        row.setAttribute("draggable",false);
         
         for (let j = 1; j<= gridSize; j++) {
             let rowSquare = document.createElement("div");
             rowSquare.setAttribute("class","row-square");
-            rowSquare.setAttribute("draggable",false);
             rowSquare.style.height = row.style.height;
             rowSquare.style.width = row.style.height;
             rowSquare.style.border = "1px solid black";
@@ -49,12 +47,12 @@ function getRandomRGB() {
 }
 
 function addColorEventToSquare(rowSquare) {
-    const events = ["mouseenter","click"];
+    const events = ["mouseenter"];
     events.forEach((event) => {rowSquare.addEventListener(event, (e) => {
         console.log(e);
          if (event === "click" || e.buttons > 0) {
         rowSquare.style.background=getRandomRGB();
-        //rowsquare.style.background = 
+        //rowsquare.style.background = "black";
             }
         }   
     ) } )
