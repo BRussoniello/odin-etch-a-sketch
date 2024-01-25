@@ -8,7 +8,6 @@ body {
 .square-container {
     width: 960px;
     height: 960px;
-    border: 2px solid red;
     display: flex;
     flex-direction: column;
     justify-content: center;

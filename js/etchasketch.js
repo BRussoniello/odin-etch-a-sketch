@@ -1,10 +1,3 @@
-/*
-Grid size = # of boxes per container side
-*/
-
-//user needs to be PROMPTED when clicking button. use prompt()
-//text field will default to 16.
-
 function makeGrid(gridSize,gridContainer,boxSize) {
     while (gridContainer.firstChild) {
         gridContainer.removeChild(gridContainer.firstChild)
@@ -15,14 +8,17 @@ function makeGrid(gridSize,gridContainer,boxSize) {
         row.style.display="flex";
         row.style.width = intToSizeStyleString(gridSize*boxSize);
         row.style.height = intToSizeStyleString(boxSize);
+        row.setAttribute("draggable",false);
         
         for (let j = 1; j<= gridSize; j++) {
-            let rowSquare = document.createElement("div")
+            let rowSquare = document.createElement("div");
             rowSquare.setAttribute("class","row-square");
+            rowSquare.setAttribute("draggable",false);
             rowSquare.style.height = row.style.height;
             rowSquare.style.width = row.style.height;
             rowSquare.style.border = "1px solid black";
             rowSquare.style.boxSizing="border-box";
+            rowSquare=addColorEventToSquare(rowSquare);
             //add mouse hover event listener
             row.appendChild(rowSquare);
             
@@ -32,8 +28,8 @@ function makeGrid(gridSize,gridContainer,boxSize) {
         }
     }
 
-function getBoxSideLength(containerSideLength,grid_size) {
-    return containerSideLength/grid_size;
+function getBoxSideLength(containerSideLength,gridSize) {
+    return containerSideLength/gridSize;
     }
 
 function intToSizeStyleString(int) {
@@ -42,13 +38,34 @@ function intToSizeStyleString(int) {
 
 function gridSizeIsValid(gridSize) {
     return gridSize <= 100 && gridSize > 0;
+    }
+
+
+function getRandomRGB() {
+    const R = Math.floor(Math.random()*255);
+    const G = Math.floor(Math.random()*255);
+    const B = Math.floor(Math.random()*255);
+    return `rgb(${R}, ${G}, ${B})`
 }
+
+function addColorEventToSquare(rowSquare) {
+    const events = ["mouseenter","click"];
+    events.forEach((event) => {rowSquare.addEventListener(event, (e) => {
+        console.log(e);
+         if (event === "click" || e.buttons > 0) {
+        rowSquare.style.background=getRandomRGB();
+        //rowsquare.style.background = 
+            }
+        }   
+    ) } )
+    return rowSquare;
+}       
 
 function main() {
     const gridSizeSpan = document.querySelector("#grid-size");
     const gridSizeButton = document.querySelector(".size-button");
+    const gridClearButton = document.querySelector(".clear-button");
     const INITIAL_GRID_SIZE = +(gridSizeSpan.textContent);
-    let currentGridSize = INITIAL_GRID_SIZE;
     let squareContainer = document.querySelector(".square-container");
     let squareContainerSize = squareContainer.offsetWidth;
     const INITIAL_BOX_SIDE_SIZE = getBoxSideLength(squareContainerSize,INITIAL_GRID_SIZE);
@@ -66,7 +83,17 @@ function main() {
             }
         }
     )
-    makeGrid(currentGridSize,squareContainer,INITIAL_BOX_SIDE_SIZE);
+    gridClearButton.addEventListener("click", () => {
+            const currentGridSize = +(gridSizeSpan.textContent);
+            makeGrid(currentGridSize,squareContainer,
+                squareContainer.firstChild.firstChild.offsetWidth)
+        
+            }
+    )
+    
+
+
+    makeGrid(INITIAL_GRID_SIZE,squareContainer,INITIAL_BOX_SIDE_SIZE);
 }
 
 main();
