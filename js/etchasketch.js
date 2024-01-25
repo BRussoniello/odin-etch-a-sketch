@@ -50,10 +50,10 @@ function addColorEventToSquare(rowSquare) {
     const events = ["mouseenter"];
     events.forEach((event) => {rowSquare.addEventListener(event, (e) => {
         console.log(e);
-         if (event === "click" || e.buttons > 0) {
+         
         rowSquare.style.background=getRandomRGB();
         //rowsquare.style.background = "black";
-            }
+            
         }   
     ) } )
     return rowSquare;
